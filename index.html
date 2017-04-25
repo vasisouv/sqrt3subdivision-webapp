@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>sqrt(3) Subdivision</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="res/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="res/css/style.css" rel="stylesheet">
+
+</head>
+
+
+
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"> sqrt(3) subdivision</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="vizualization-app.html">Visualization App</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">Algorithm Used (PHP)</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="header-content">
+                        <div class="header-content-inner">
+                            <h1>This application allows you to convert any .ply file using the sqrt(3) subdivision algorithm</h1>
+                            <h3>Select any .ply file and press the button below!</h3>
+                            <form method="POST" enctype="multipart/form-data" action="php/sqrt3subdivision_script.php" id="ply-form" name="ply-form"  >
+
+                                <div class="input-group">
+                                    <input accept=".ply" name="plyFile" id="plyFile"  type="file" class="form-control" readonly>
+                                </div>
+                                <br>
+                                <a href="#" id="submit-ply" class="btn btn-outline btn-xl page-scroll">Convert & Download</a>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="device-container">
+                        <img src="res/img/square-root.svg"  alt="Square root"/>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </header>
+
+    <footer>
+        <div class="container">
+            <p>Souvatzis Vasileios (UID 17)</p>
+            <p>Aristotle University of Thessaloniki, Greece</p>
+            <p>Informatics Postgraduate Studies - Internet & Worldwide Web</p>
+            <p>Virtual environments and games on the web - Dr Nikolaidis</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="res/lib/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="res/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="res/js/scripts.js"></script>
+
+</body>
+
+</html>

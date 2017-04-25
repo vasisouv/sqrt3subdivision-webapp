@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>sqrt(3) Subdivision</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="res/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="res/css/style.css" rel="stylesheet">
+    <link href="res/css/app.css" rel="stylesheet">
+
+</head>
+<body id="page-top">
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="index.html"> sqrt(3) subdivision</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="page-scroll" href="vizualization-app.html">Visualization App</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#download">Algorithm Used (PHP)</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+<div id="info">
+    <p>You can view a visual comparison of the stanford bunny model <span style="color:#FDD835">before</span> and <span style="color:#F57C00">after </span> the sqrt(3) subidivision </p>
+    <p>This tool was designed using the <a href="https://threejs.org/">three.js WebGL library</a></p>
+    <p>Model courtesy of <a href="http://graphics.stanford.edu/data/3Dscanrep/"> the Stanford 3D Scanning Repository</a></p><br>
+    <p><a href="index.html" class="btn btn-outline btn-xl page-scroll">&#8592; Back</a></p>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="screen">
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="res/lib/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="res/lib/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- ThreeJS libraries-->
+<script src="res/lib/threeJS/three.min.js"></script>
+<script src="res/lib/threeJS/PLYLoader.js"></script>
+<script src="res/lib/threeJS/Detector.js"></script>
+<script src="res/lib/threeJS/stats.min.js"></script>
+<script src="res/lib/threeJS/setup.js"></script>
+
+<!-- Theme JavaScript -->
+<script src="res/js/scripts.js"></script>
+
+
+
+</body>
+
+</html>
