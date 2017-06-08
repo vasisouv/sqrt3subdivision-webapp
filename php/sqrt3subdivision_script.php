@@ -3,7 +3,7 @@
 include 'Vertex.php';
 include 'Face.php';
 
-$myFile = "../models/stanford_bunny.obj";
+$myFile = "../models/cube.obj";
 $lines = file($myFile);
 
 $vertices = array();
@@ -11,9 +11,12 @@ $faces = array();
 
 $newVertices = array();
 $newFaces = array();
+$id = 1;
 
 for ($i = 0; $i<sizeof($lines); $i++){
     $lines[$i] = str_replace("  "," ",$lines[$i]);
+
+
     if (substr( $lines[$i], 0, 1 ) == "v" ){
 
         $tokens = explode(" ",$lines[$i]);
@@ -22,25 +25,29 @@ for ($i = 0; $i<sizeof($lines); $i++){
         $vertex->x = $tokens[1];
         $vertex->y = $tokens[2];
         $vertex->z = $tokens[3];
-        $vertex->id = $i+1;
+        $vertex->id = $id;
 
         array_push($vertices,$vertex);
+
     }
     if (substr( $lines[$i], 0, 1 ) == "f" ){
 
         $tokens = explode(" ",$lines[$i]);
 
         $face = new Face();
-        $face->v1 = $tokens[1];
-        $face->v2 = $tokens[2];
-        $face->v3 = $tokens[3];
+        $face->v1 = (float)$tokens[1];
+        $face->v2 = (float)$tokens[2];
+        $face->v3 = (float)$tokens[3];
+        $face->id = $id;
 
         array_push($faces,$face);
+        $id++;
     }
+
 }
 
-findNeighbours($faces,$vertices);
-
+findVertexNeighbours($faces,$vertices);
+findFaceNeighbours($faces);
 /*foreach ($vertices as $vertex){
 
     echo "ID = ". $vertex->id; echo "<br>";
@@ -56,8 +63,24 @@ findNeighbours($faces,$vertices);
 sqrt3subdivision();
 
 
+function findFaceNeighbours ($faces){
 
-function findNeighbours($faces,$vertices){
+    for ($i=0 ; $i<sizeof($faces) ; $i++){
+        $currentFace = array();
+        array_push($currentFace,$faces[$i]->v1,$faces[$i]->v2,$faces[$i]->v3);
+        for ($j=0 ; $j<sizeof($faces) ; $j++){
+            $nextFace = array();
+            array_push($nextFace,$faces[$j]->v1,$faces[$j]->v2,$faces[$j]->v3);
+            if ($j != $i){
+                $intersection = array_intersect($currentFace,$nextFace);
+                if (sizeof($intersection) == 2){
+                    array_push($faces[$i]->neighbours,$faces[$j]->id);
+                }
+            }
+        }
+    }
+}
+function findVertexNeighbours($faces,$vertices){
     for ($i=0 ; $i<sizeof($faces) ; $i++){
 
         array_push($vertices[$faces[$i]->v1-1]->neighbours,$faces[$i]->v2,$faces[$i]->v3);
@@ -73,13 +96,14 @@ function findNeighbours($faces,$vertices){
 
 foreach ($newVertices as $newVertex){
 
+
+    echo "v ".$newVertex->x." ".$newVertex->y." ".$newVertex->z;
     echo "<br>";
-    echo "v ".$newVertex->x."    ".$newVertex->y."         ".$newVertex->z;
 }
 foreach ($newFaces as $newFace){
 
     echo "<br>";
-    echo "f ".$newFace->v1."    ".$newFace->v2."         ".$newFace->v3;
+    echo "f ".$newFace->v1." ".$newFace->v2." ".$newFace->v3;
 }
 
 function sqrt3subdivision(){
@@ -89,9 +113,9 @@ function sqrt3subdivision(){
     foreach ($faces as $face){
 
         $newVertex = new Vertex();
-        $newVertex->x = round(($vertices[$face->v1-1]->x + $vertices[$face->v2-1]->x + $vertices[$face->v3-1]->x)/3,6);
-        $newVertex->y = round(($vertices[$face->v1-1]->y + $vertices[$face->v2-1]->y + $vertices[$face->v3-1]->y)/3,6);
-        $newVertex->z = round(($vertices[$face->v1-1]->z + $vertices[$face->v2-1]->z + $vertices[$face->v3-1]->z)/3,6);
+        $newVertex->x = round(((float)$vertices[$face->v1-1]->x + (float)$vertices[$face->v2-1]->x + (float)$vertices[$face->v3-1]->x)/3,6);
+        $newVertex->y = round(((float)$vertices[$face->v1-1]->y + (float)$vertices[$face->v2-1]->y + (float)$vertices[$face->v3-1]->y)/3,6);
+        $newVertex->z = round(((float)$vertices[$face->v1-1]->z + (float)$vertices[$face->v2-1]->z + (float)$vertices[$face->v3-1]->z)/3,6);
         array_push($newVertices,$newVertex);
     }
 
@@ -108,39 +132,29 @@ function sqrt3subdivision(){
 
 
         foreach ($vertex->neighbours as $neighbour){
-            $sumX += $vertices[$neighbour-1]->x;
-            $sumY += $vertices[$neighbour-1]->y;
-            $sumZ += $vertices[$neighbour-1]->z;
+            $sumX += (float)$vertices[$neighbour-1]->x;
+            $sumY += (float)$vertices[$neighbour-1]->y;
+            $sumZ += (float)$vertices[$neighbour-1]->z;
         }
-        $newVertex->x = round((1-$an)*$vertex->x+$an*(1/$n)*$sumX,4);
-        $newVertex->y = round((1-$an)*$vertex->y+$an*(1/$n)*$sumY,4);
-        $newVertex->z = round((1-$an)*$vertex->z+$an*(1/$n)*$sumZ,4);
+        $newVertex->x = round((1-$an)*(float)$vertex->x+$an*(1/$n)*$sumX,4);
+        $newVertex->y = round((1-$an)*(float)$vertex->y+$an*(1/$n)*$sumY,4);
+        $newVertex->z = round((1-$an)*(float)$vertex->z+$an*(1/$n)*$sumZ,4);
 
         array_push($newVertices,$newVertex);
     }
     for ($i=0 ; $i<sizeof($faces) ; $i++){
 
+        for ($j=0 ; $j<sizeof($faces[$i]->neighbours)*2; $j++){
+            $newFace = new Face();
 
-        $newFace = new Face();
-        $newFace->v1 = $i+1;
-        $newFace->v2 = $faces[$i]->v1 + sizeof($faces);
-        $newFace->v3 = $faces[$i]->v2 + sizeof($faces);
 
-        array_push($newFaces,$newFace);
+            $newFace->v1 = $i+1;
+            $newFace->v2 = 0;
+            $newFace->v3 = 0;
 
-        $newFace = new Face();
-        $newFace->v1 = $i+1;
-        $newFace->v2 = $faces[$i]->v1 + sizeof($faces);
-        $newFace->v3 = $faces[$i]->v3 + sizeof($faces);
+            array_push($newFaces,$newFace);
 
-        array_push($newFaces,$newFace);
-
-        $newFace = new Face();
-        $newFace->v1 = $i+1;
-        $newFace->v2 = $faces[$i]->v2 + sizeof($faces);
-        $newFace->v3 = $faces[$i]->v3 + sizeof($faces);
-
-        array_push($newFaces,$newFace);
+        }
 
     }
 
