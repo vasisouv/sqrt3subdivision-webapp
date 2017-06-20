@@ -1,12 +1,19 @@
-/*!
- * Start Bootstrap - New Age v3.3.7 (http://startbootstrap.com/template-overviews/new-age)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
 .heading-font {
   font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
   font-weight: 200;
   letter-spacing: 1px;
+}
+.dropdown{
+  display:inline;
+
+}
+.warning{
+  color: #F44336;
+  font-size:23px;
+  display:none;
+}
+.dropdown-toggle{
+  background-color:transparent;
 }
 .body-font {
   font-family: 'Muli', 'Helvetica', 'Arial', 'sans-serif';
@@ -372,7 +379,7 @@ section.contact ul.list-social li.social-google-plus a:hover {
 }
 footer {
   background-color: #222222;
-  padding: 25px 0;
+  padding: 26.5px 0;
   color: rgba(255, 255, 255, 0.3);
   text-align: center;
 }

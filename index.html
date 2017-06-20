@@ -38,17 +38,6 @@
                 <a class="navbar-brand page-scroll" href="#page-top"> sqrt(3) subdivision</a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="vizualization-app.html">Visualization App</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#download">Algorithm Used (PHP)</a>
-                    </li>
-                </ul>
-            </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
@@ -60,16 +49,29 @@
                 <div class="col-sm-7">
                     <div class="header-content">
                         <div class="header-content-inner">
-                            <h1>This application allows you to convert any .ply file using the sqrt(3) subdivision algorithm</h1>
-                            <h3>Select any .ply file and press the button below!</h3>
-                            <form method="POST" enctype="multipart/form-data" action="php/sqrt3subdivision_script.php" id="ply-form" name="ply-form"  >
+                            <h1>This application allows you to convert any .obj file using the sqrt(3) subdivision algorithm</h1>
+                            <h3>Select any .obj file and press the button below!</h3>
+                            <form method="POST" enctype="multipart/form-data" action="php/sqrt3subdivision.php" id="obj-form" name="obj-form"  >
 
                                 <div class="input-group">
-                                    <input accept=".ply" name="plyFile" id="plyFile"  type="file" class="form-control" readonly>
+                                    <input accept=".obj" name="objFile" id="objFile"  type="file" class="form-control" readonly>
                                 </div>
                                 <br>
-                                <a href="#" id="submit-ply" class="btn btn-outline btn-xl page-scroll">Convert & Download</a>
-                            </form>
+                                <div class="dropdown">
+                                    <span> Iterations: </span>
+                                    <button id="it-dd" class="btn btn-outline  dropdown-toggle" data-toggle="dropdown">1
+                                        <span class="caret"></span></button>
+                                    <ul id="dropdown-it" class="dropdown-menu">
+                                        <li><a href="#">2 </a></li>
+                                        <li><a href="#">3 </a></li>
+                                        <li><a href="#">4 </a></li>
+                                    </ul>
+                                </div>
+                                <br>
+                                <br>
+                                <a href="#" id="submit-obj" class="btn btn-outline btn-xl page-scroll">Convert & Download</a>
+                            </form><br>
+                            <p class="warning">Please select a file!</p>
 
                         </div>
                     </div>

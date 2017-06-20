@@ -1,34 +1,31 @@
-(function($) {
-    "use strict"; // Start of use strict
+$("#submit-obj").click(function() {
+    var fileName = $("#objFile").val();
 
-    // jQuery for page scrolling feature - requires jQuery Easing plugin
-    $(document).on('click', 'a.page-scroll', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: ($($anchor.attr('href')).offset().top - 50)
-        }, 1250, 'easeInOutExpo');
-        event.preventDefault();
-    });
+    if(fileName) {
+        var iterations = $("#it-dd").text();
+        console.log("Iterations = "+iterations);
+        var input = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "iterations").val(iterations);
+        $('#obj-form').append($(input)).submit();
+        $(".warning").hide();
+    } else {
 
-    // Highlight the top nav as scrolling occurs
-    $('body').scrollspy({
-        target: '.navbar-fixed-top',
-        offset: 100
-    });
+        $(".warning").animate({opacity:0},200,"linear",function(){
+            $(this).show();
+            $(this).animate({opacity:1},200);
+            $(this).animate({opacity:0},200);
+            $(this).animate({opacity:1},200);
+        });
 
-    // Closes the Responsive Menu on Menu Item Click
-    $('.navbar-collapse ul li a').click(function() {
-        $('.navbar-toggle:visible').click();
-    });
+    }
 
-    // Offset for Main Navigation
-    $('#mainNav').affix({
-        offset: {
-            top: 50
-        }
-    });
-    $("#submit-ply").click(function() {
-        $("#ply-form").submit();
-    });
+});
 
-})(jQuery); // End of use strict
+$('#dropdown-it').find('a').click(function(){
+
+    console.log("hello");
+    var prevText = $('#it-dd').text();
+    $('#it-dd').contents().first().replaceWith($(this).text());
+    $(this).text(prevText);
+});
