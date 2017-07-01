@@ -18,32 +18,12 @@ $newFaces = array();
 $iterations = $_POST["iterations"];
 
 
-
-
 $target_file = "../models/tmp/" . basename($_FILES["objFile"]["name"]);
 move_uploaded_file($_FILES["objFile"]["tmp_name"], $target_file);
 
-sqrt3subdivision(2);
+sqrt3subdivision();
 downloadFile();
 
-foreach ($centerVertices as $centerVertex){
-
-
-    echo "v ".$centerVertex->x." ".$centerVertex->y." ".$centerVertex->z;
-    echo "<br>";
-}
-
-foreach ($refinedVertices as $refinedVertex){
-
-
-    echo "v ".$refinedVertex->x." ".$refinedVertex->y." ".$refinedVertex->z;
-    echo "<br>";
-}
-foreach ($newFaces as $newFace){
-
-    echo "<br>";
-    echo "f ".$newFace->v1." ".$newFace->v2." ".$newFace->v3;
-}
 
 $faces = $newFaces;
 $vertices = array();
@@ -124,26 +104,26 @@ function findVertexNeighbours($faces,$vertices){
 }
 
 
-
-function sqrt3subdivision($executions){
+function sqrt3subdivision(){
     global $faces,$newFaces,$vertices,$centerVertices,$refinedVertices,$iterations;
 
-    $counter = 0;
-
+    $it_counter = 0;
 
     do{
-        if ($counter == 0){
+        if ($it_counter == 0){
             $myFile = "../models/tmp/".basename($_FILES["objFile"]["name"]);
             $lines = file($myFile);
+
+
 
             unlink($myFile);
         }else {
             $myFile = "../models/tmp/temp.obj";
+
+            echo "entered";
             $lines = file($myFile);
         }
         initializeData($lines);
-
-        
 
         findVertexNeighbours($faces,$vertices);
         findFaceNeighbours($faces);
@@ -197,6 +177,7 @@ function sqrt3subdivision($executions){
             }
         }
 
+
         foreach ($faces as $face){
             $faceV = array();
 
@@ -205,18 +186,31 @@ function sqrt3subdivision($executions){
             $intersection = array();
 
             array_push($faceV,$face->v1,$face->v2,$face->v3);
-
+            $counter = true;
             foreach ($face->neighbours as $fNeighbour){
+
 
                 array_push($neighbourFaceV,$fNeighbour->v1,$fNeighbour->v2,$fNeighbour->v3);
 
                 $intersection = array_intersect($neighbourFaceV,$faceV);
 
                 foreach ($intersection as $item) {
-                    $newFace = new Face();
-                    $newFace->v1 = $face->center;
-                    $newFace->v2 = $fNeighbour->center;
-                    $newFace->v3 = $item+sizeof($centerVertices);
+
+                    if (!$counter){
+                        $newFace = new Face();
+                        $newFace->v1 = $fNeighbour->center;
+                        $newFace->v2 = $face->center;
+                        $newFace->v3 = $item+sizeof($centerVertices);
+                        $counter = true;
+                    }
+                    else{
+                       // echo "In switch"."<br>";
+                        $newFace = new Face();
+                        $newFace->v1 = $face->center;
+                        $newFace->v2 = $fNeighbour->center;
+                        $newFace->v3 = $item+sizeof($centerVertices);
+                        $counter = false;
+                    }
 
                     $found = false;
 
@@ -257,7 +251,7 @@ function sqrt3subdivision($executions){
 
         fclose($myfile);
 
-        $counter++;
+        $it_counter++;
 
         $vertices = array();
         $faces = array();
@@ -267,7 +261,7 @@ function sqrt3subdivision($executions){
         $newFaces = array();
 
 
-    }while($counter<$iterations);
+    }while($it_counter<$iterations);
 
 }
 function downloadFile()
